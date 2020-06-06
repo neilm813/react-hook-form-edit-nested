@@ -1,11 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
-
-import { useEffect, useState } from "react";
 
 function App() {
   const [obj, setObj] = useState(null);
-  // const [editedObj, setEditedObj] = useState(null);
 
   useEffect(() => {
     // this is where you would call your db
