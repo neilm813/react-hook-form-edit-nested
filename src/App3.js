@@ -41,7 +41,7 @@ function App() {
         stateCopy.items[itemIdx].categories[catIdx] = cat;
         return stateCopy;
       default:
-        return {};
+        throw new Error("Invalid action type dispatched.");
     }
   };
 
