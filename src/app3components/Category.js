@@ -1,16 +1,19 @@
 import React from "react";
 
-const Category = ({ category, dispatch }) => {
+const Category = ({ category, itemIdx, catIdx, dispatch }) => {
   return (
-    <div>
+    <>
       <input
         type="text"
         value={category}
         onChange={(e) =>
-          dispatch({ type: "updateCategory", payload: e.target.value })
+          dispatch({
+            type: "updateCategory",
+            payload: { itemIdx, catIdx, cat: e.target.value },
+          })
         }
       />
-    </div>
+    </>
   );
 };
 

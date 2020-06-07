@@ -11,7 +11,7 @@ const Item = ({ item: { name, quantity, categories }, idx, dispatch }) => {
           value={name}
           onChange={(e) =>
             dispatch({
-              action: "updateItem",
+              type: "updateItem",
               payload: { idx, key: "name", val: e.target.value },
             })
           }
@@ -25,18 +25,24 @@ const Item = ({ item: { name, quantity, categories }, idx, dispatch }) => {
           value={quantity}
           onChange={(e) =>
             dispatch({
-              action: "updateItem",
-              payload: { idx, key: "name", val: e.target.value },
+              type: "updateItem",
+              payload: { idx, key: "quantity", val: e.target.value },
             })
           }
         />
       </div>
 
       {categories.map((category, i) => (
-        <React.Fragment key={i}>
+        <div key={i}>
           <label>Category {i + 1}: </label>
-          <Category key={i} category={category} dispatch={dispatch} />
-        </React.Fragment>
+          <Category
+            key={i}
+            catIdx={i}
+            itemIdx={idx}
+            category={category}
+            dispatch={dispatch}
+          />
+        </div>
       ))}
     </>
   );

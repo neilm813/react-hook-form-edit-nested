@@ -1,3 +1,5 @@
+// Non-componetized version
+
 import React, { useEffect, useState } from "react";
 import "./App.css";
 
@@ -61,19 +63,13 @@ function App() {
     setObj(objCopy);
   };
 
-  // mutating state directly usually discouraged
-  const handleOnChangeByReference = (e, objToUpdate) => {
-    const { name, value } = e.target;
-    objToUpdate[name] = value;
-    setObj({ ...obj });
-  };
-
   if (obj === null) {
     return "loading";
   }
 
   return (
     <div className="App">
+      <h1>App.js</h1>
       <h2>Update via key path</h2>
 
       <form
@@ -141,73 +137,6 @@ function App() {
       </form>
 
       <hr />
-
-      <h2>Update by reference</h2>
-      <form
-        onSubmit={(e) => {
-          handleSubmit(e);
-        }}
-      >
-        <div>
-          <label>Title: </label>
-          <input
-            type="text"
-            name="title"
-            onChange={(e) => handleOnChangeByReference(e, obj)}
-            value={obj.title}
-          />
-        </div>
-
-        <div>
-          <label>Description: </label>
-          <input
-            type="text"
-            name="description"
-            onChange={(e) => handleOnChangeByReference(e, obj)}
-            value={obj.description}
-          />
-        </div>
-
-        {obj.items.map((item, i) => (
-          <React.Fragment key={i}>
-            <h3>Sub Item {i + 1}</h3>
-            <div>
-              <label>Name: </label>
-              <input
-                type="text"
-                value={item.name}
-                onChange={(e) => handleOnChangeByReference(e, obj.items[i])}
-                name={"name"}
-              />
-            </div>
-
-            <div>
-              <label>Quantity: </label>
-              <input
-                type="number"
-                value={item.quantity}
-                onChange={(e) => handleOnChangeByReference(e, obj.items[i])}
-                name={"quantity"}
-              />
-            </div>
-
-            {item.categories.map((category, j) => (
-              <div key={j}>
-                <label>Category {j + 1}: </label>
-                <input
-                  type="text"
-                  value={category}
-                  onChange={(e) =>
-                    handleOnChangeByReference(e, obj.items[i].categories)
-                  }
-                  name={j}
-                />
-              </div>
-            ))}
-          </React.Fragment>
-        ))}
-        <button>Update</button>
-      </form>
     </div>
   );
 }

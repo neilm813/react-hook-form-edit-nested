@@ -1,3 +1,5 @@
+// Componetized version without reducer
+
 import React, { useCallback, useEffect, useState } from "react";
 import "./App.css";
 
@@ -54,6 +56,7 @@ function App() {
 
   return (
     <div className="App">
+      <h1>App2.js</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Title: </label>

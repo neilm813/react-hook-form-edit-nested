@@ -1,9 +1,18 @@
+// componetized version with useReducer. Could add context API to this as well
+
 import React, { useEffect, useReducer } from "react";
 import "./App.css";
 
 import Item from "./app3components/Item";
 
 function App() {
+  const topLevelStateUpdate = (state, key, val) => {
+    return {
+      ...state,
+      [key]: val,
+    };
+  };
+
   const reducer = (state, action) => {
     let stateCopy = {};
 
@@ -14,7 +23,12 @@ function App() {
         return action.payload;
       case "title":
       case "description":
-        return topLevelStateUpdate(state, action.type, action.payload);
+        const newState = topLevelStateUpdate(
+          state,
+          action.type,
+          action.payload
+        );
+        return newState;
       case "updateItem":
         const { idx, key, val } = action.payload;
         // deep copy, aka break all refrences including nested (spread is shallow copy, doesn't break nested refs)
@@ -22,24 +36,17 @@ function App() {
         stateCopy.items[idx][key] = val;
         return stateCopy;
       case "updateCategory":
-        const { itemIdx, catIdx, updatedCat } = action.payload;
+        const { itemIdx, catIdx, cat } = action.payload;
         stateCopy = JSON.parse(JSON.stringify(state));
-        stateCopy[itemIdx][catIdx] = updatedCat;
+        stateCopy.items[itemIdx].categories[catIdx] = cat;
         return stateCopy;
       default:
-        break;
+        return {};
     }
   };
 
-  // const [state, dispatch] = useReducer(reducer, {});
-  const [{ title, description, items }, dispatch] = useReducer(reducer, {});
-
-  const topLevelStateUpdate = (state, key, val) => {
-    return {
-      ...state,
-      [key]: val,
-    };
-  };
+  const [state, dispatch] = useReducer(reducer, {});
+  const { title, description, items } = state;
 
   useEffect(() => {
     // this is where you would call your db
@@ -72,8 +79,13 @@ function App() {
     console.log("ready to PUT to db", state);
   };
 
+  if (items === undefined) {
+    return "loading";
+  }
+
   return (
     <div className="App">
+      <h1>App3.js</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Title: </label>
