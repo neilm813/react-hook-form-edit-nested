@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "./App.css";
 
-import Item from "./components/Item";
+import Item from "./app2components/Item";
 
 function App() {
   const [title, setTitle] = useState("");
@@ -37,11 +37,14 @@ function App() {
     };
   };
 
-  const updateItem = (idx, newVal) => {
-    const newItems = [...items];
-    newItems[idx] = newVal;
-    setItems(newItems);
-  };
+  const updateItem = useCallback(
+    (idx, newItem) => {
+      const newItems = [...items];
+      newItems[idx] = newItem;
+      setItems(newItems);
+    },
+    [items]
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();

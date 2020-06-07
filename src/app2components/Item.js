@@ -12,7 +12,7 @@ const Item = ({ item, updateItem }) => {
       quantity,
       categories,
     });
-  }, [name, quantity, categories]);
+  }, [name, quantity, categories, updateItem]);
 
   const updateCategory = (idx, newVal) => {
     const newCategories = [...categories];
@@ -41,11 +41,14 @@ const Item = ({ item, updateItem }) => {
       </div>
 
       {categories.map((category, i) => (
-        <Category
-          key={i}
-          category={category}
-          updateCategory={(val) => updateCategory(i, val)}
-        />
+        <React.Fragment key={i}>
+          <label>Category {i + 1}: </label>
+          <Category
+            key={i}
+            category={category}
+            updateCategory={(val) => updateCategory(i, val)}
+          />
+        </React.Fragment>
       ))}
     </>
   );
